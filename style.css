@@ -1238,7 +1238,7 @@ button {
 
 /* FINAL OVERRIDE: R.R Designers design popup */
 #designModal {
-  padding: 6px !important;
+  padding: 0 !important;
   align-items: stretch !important;
   justify-content: stretch !important;
 }
@@ -1266,10 +1266,14 @@ button {
 
 #designModal .design-modal-main-image {
   width: 100% !important;
-  height: clamp(250px, 45vh, 480px) !important;
+  aspect-ratio: 690 / 1030;
+  height: auto !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
 }
 
 #designModal .design-modal-main-image img {
+  display: block !important;
   width: 100% !important;
   height: 100% !important;
   object-fit: contain !important;
@@ -1295,26 +1299,65 @@ button {
   align-self: stretch !important;
 }
 
+/* Mobile: full-width, taller, slightly zoomed image */
 @media (max-width: 650px) {
   #designModal {
-    padding: 4px !important;
+    padding: 0 !important;
   }
 
   #designModal .design-modal-card {
-    padding: 12px !important;
-    gap: 12px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 100dvh !important;
+    max-height: 100dvh !important;
+    padding: 0 !important;
+    gap: 10px !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+  }
+
+  #designModal .design-modal-gallery {
+    display: block !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
   }
 
   #designModal .design-modal-main-image {
-    height: 34vh !important;
-    min-height: 200px !important;
+    display: block !important;
+    width: 100% !important;
+    height: 78dvh !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    aspect-ratio: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+    overflow: hidden !important;
+  }
+
+  #designModal .design-modal-main-image img {
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center center !important;
+    transform: scale(1.06);
   }
 
   #designModal .design-modal-thumbnails {
     gap: 6px !important;
+    margin: 8px 10px 0 !important;
+    width: auto !important;
   }
 
   #designModal .design-modal-thumbnails button {
     height: 65px !important;
+  }
+
+  #designModal .design-modal-details {
+    width: 100% !important;
+    padding: 12px 14px !important;
   }
 }
