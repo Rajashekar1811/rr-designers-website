@@ -1,0 +1,497 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Owner Admin | R.R Designers</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body { padding: 24px 14px 60px; }
+    .admin-wrap { width: min(1000px, 100%); margin: 25px auto; }
+    .admin-heading { text-align: center; margin-bottom: 28px; }
+    .admin-heading h1 { font-family: "Playfair Display", serif; font-size: clamp(30px, 5vw, 46px); }
+    .admin-heading p { color: #786c8d; margin-top: 10px; }
+    .admin-panel { padding: clamp(20px, 4vw, 34px); margin-bottom: 25px; }
+    .admin-panel h2 { font-family: "Playfair Display", serif; margin-bottom: 18px; }
+    .admin-form { display: grid; gap: 12px; }
+    .admin-form label { font-size: 13px; font-weight: 700; color: #635273; }
+    .admin-form input, .admin-form select, .admin-form textarea {
+      width: 100%; padding: 12px; border: 1px solid #e4d9f1;
+      border-radius: 12px; background: #ffffffd9; color: #34264d;
+    }
+    .admin-form input[type="checkbox"] { width: auto; }
+    .admin-message { min-height: 22px; font-size: 13px; overflow-wrap: anywhere; }
+    .admin-designs, .admin-bookings { display: grid; gap: 14px; }
+    .admin-item {
+      display: grid; grid-template-columns: 115px 1fr; gap: 16px;
+      align-items: start; padding: 15px; border-radius: 18px;
+      background: #ffffffa8; border: 1px solid #ffffff;
+    }
+    .admin-item img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 12px; }
+    .admin-item h3 { font-size: 16px; margin-bottom: 6px; }
+    .admin-item p { font-size: 13px; color: #786c8d; margin-bottom: 8px; overflow-wrap: anywhere; }
+    .admin-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+    .button-small { min-height: 36px; padding: 8px 12px; font-size: 12px; }
+    .danger-button { background: linear-gradient(110deg, #ef6685, #d94474); }
+    .admin-topbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+    .booking-details { display: grid; gap: 5px; }
+    
+/* Customer bookings horizontal table */
+.booking-filters {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.booking-filters input,
+.booking-filters select {
+  width: 100%;
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid #e4d9f1;
+  border-radius: 10px;
+  background: #ffffffd9;
+  color: #34264d;
+}
+
+@media (max-width: 520px) {
+  .booking-filters {
+    grid-template-columns: 1fr;
+  }
+}
+
+.booking-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  margin-top: 12px;
+  border-radius: 12px;
+  border: 1px solid #e4d9f1;
+  background: #ffffffa8;
+}
+
+.booking-table {
+  width: 100%;
+  min-width: 1150px;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.booking-table th,
+.booking-table td {
+  padding: 12px;
+  border-bottom: 1px solid #e4d9f1;
+  vertical-align: top;
+  font-size: 13px;
+  color: #34264d;
+}
+
+.booking-table th {
+  background: #eee5f8;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.booking-table td {
+  overflow-wrap: anywhere;
+}
+
+.booking-table tbody tr:hover {
+  background: #f8f3ff;
+}
+
+.booking-table th:nth-child(5),
+.booking-table td:nth-child(5) {
+  min-width: 180px;
+  max-width: 260px;
+}
+
+.booking-table th:nth-child(8),
+.booking-table td:nth-child(8) {
+  min-width: 150px;
+  white-space: nowrap;
+}
+
+.booking-status-select {
+  max-width: 125px;
+  padding: 7px;
+  border: 1px solid #e4d9f1;
+  border-radius: 6px;
+}
+
+.booking-actions {
+  white-space: nowrap;
+}
+
+.booking-actions button {
+  margin: 2px;
+}
+
+    .hidden { display: none !important; }
+    @media (max-width: 520px) {
+      .admin-item { grid-template-columns: 80px 1fr; gap: 10px; padding: 10px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="navbar glass">
+    <a href="index.html" class="brand">
+      <span class="brand-mark">RR</span>
+      <span>R.R Designers</span>
+    </a>
+    <a class="button button-light" href="index.html">View Website</a>
+  </header>
+
+  <main class="admin-wrap">
+    <div class="admin-heading">
+      <p class="eyebrow">PRIVATE OWNER AREA</p>
+      <h1>Owner <span style="color:#8957ed">Dashboard</span></h1>
+      <p>Manage your design gallery and customer bookings.</p>
+    </div>
+
+    <section id="loginPanel" class="admin-panel glass">
+      <h2>Owner Login</h2>
+      <form id="loginForm" class="admin-form">
+        <label for="adminEmail">Email Address</label>
+        <input id="adminEmail" type="email" autocomplete="username"
+               placeholder="Your owner email" required>
+
+        <label for="adminPassword">Password</label>
+        <input id="adminPassword" type="password"
+               autocomplete="current-password" placeholder="Your password" required>
+
+        <button class="button" type="submit">Login to Dashboard</button>
+        
+<p style="text-align: center; margin: 10px 0;">
+  <a href="#" id="forgotPasswordLink"
+     style="color: #7c3aed; text-decoration: underline; font-size: 14px;">
+    Forgot Password?
+  </a>
+</p>
+
+        <p id="loginStatus" class="admin-message" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+
+    <div id="adminDashboard" class="hidden">
+      <section class="admin-panel glass">
+        <div class="admin-topbar">
+          <h2>Design Gallery Manager</h2>
+          <button id="logoutButton" class="button button-light" type="button">Logout</button>
+        </div>
+
+        <form id="designForm" class="admin-form">
+          <input id="designId" type="hidden">
+
+          <label for="designTitle">Design Title</label>
+          <input id="designTitle" type="text" maxlength="120"
+                 placeholder="e.g. Bridal Embroidery" required>
+
+          <label for="designCategory">Category</label>
+          <input id="designCategory" type="text" maxlength="80"
+                 placeholder="e.g. Blouse Work" required>
+            
+         <label for="designDescription">Full Description</label>
+         <textarea id="designDescription" maxlength="2000"
+                placeholder="Describe the embroidery design, fabric, work details..."
+                rows="4"></textarea>
+
+         <label for="designPrice">Price (₹)</label>
+         <input id="designPrice" type="number" min="0" step="1"
+                placeholder="Enter price in rupees">
+                
+<label for="designDiscountType">Discount Type</label>
+<select id="designDiscountType">
+  <option value="percent">Percentage (%)</option>
+  <option value="fixed">Fixed Amount (₹)</option>
+</select>
+
+<label for="designDiscountValue">Discount Value</label>
+<input
+  id="designDiscountValue"
+  type="number"
+  min="0"
+  step="0.01"
+  value="0"
+  placeholder="Enter discount value"
+>
+
+<label>
+  <input id="designIsSpecial" type="checkbox">
+  Mark as Special Offer
+</label>
+
+<label for="designSpecialLine">Special Offer Text</label>
+<input
+  id="designSpecialLine"
+  type="text"
+  maxlength="160"
+  placeholder="✨ Special Offer — Limited Time"
+>
+
+          
+      <label for="designImage">Upload Design Photo 1 (Required)</label>
+      <input id="designImage" type="file" accept="image/jpeg,image/png,image/webp">
+
+      <label for="designImage2">Upload Design Photo 2 (Optional)</label>
+      <input id="designImage2" type="file" accept="image/jpeg,image/png,image/webp">
+
+      <label for="designImage3">Upload Design Photo 3 (Optional)</label>
+      <input id="designImage3" type="file" accept="image/jpeg,image/png,image/webp">
+
+      <label for="designImage4">Upload Design Photo 4 (Optional)</label>
+      <input id="designImage4" type="file" accept="image/jpeg,image/png,image/webp">
+
+      <label for="designImage5">Upload Design Photo 5 (Optional)</label>
+      <input id="designImage5" type="file" accept="image/jpeg,image/png,image/webp">
+
+      <label for="designVideo">Upload Design Video (Optional)</label>
+      <input id="designVideo" type="file" accept="video/mp4,video/webm,video/quicktime">
+
+
+
+          <label>
+            <input id="designPublished" type="checkbox" checked>
+            Show this design on the public website
+          </label>
+
+          <p id="currentImageNote" class="admin-message"></p>
+          <button id="saveDesignButton" class="button" type="submit">Save Design</button>
+          <button id="cancelEditButton" class="button button-light hidden" type="button">Cancel Edit</button>
+          <p id="designStatus" class="admin-message" role="status" aria-live="polite"></p>
+        </form>
+      </section>
+
+<!-- Men's Design Upload Manager -->
+<section class="admin-panel glass">
+  <h2>Men's Design Gallery Manager</h2>
+  <p>Manage men's designs, prices, discounts and special offers.</p>
+
+  <form id="menDesignForm" class="admin-form">
+    <input id="menDesignId" type="hidden">
+
+    <label for="menDesignTitle">Design Title</label>
+    <input
+      id="menDesignTitle"
+      type="text"
+      maxlength="120"
+      placeholder="e.g. Men's Embroidery Design"
+      required
+    >
+
+    <label for="menDesignCategory">Category</label>
+    <input
+      id="menDesignCategory"
+      type="text"
+      value="Mens"
+      readonly
+      required
+    >
+
+    <label for="menDesignDescription">Full Description</label>
+    <textarea
+      id="menDesignDescription"
+      maxlength="2000"
+      placeholder="Describe the design and work details..."
+      rows="4"
+    ></textarea>
+
+    <label for="menDesignPrice">Original Price (₹)</label>
+    <input
+      id="menDesignPrice"
+      type="number"
+      min="0"
+      step="1"
+      placeholder="Enter original price"
+    >
+
+    <label for="menDesignDiscountType">Discount Type</label>
+    <select id="menDesignDiscountType">
+      <option value="percent">Percentage (%)</option>
+      <option value="fixed">Fixed Amount (₹)</option>
+    </select>
+
+    <label for="menDesignDiscountValue">Discount Value</label>
+    <input
+      id="menDesignDiscountValue"
+      type="number"
+      min="0"
+      step="0.01"
+      value="0"
+      placeholder="Enter discount value"
+    >
+
+    <label>
+      <input id="menDesignIsSpecial" type="checkbox">
+      Mark as Special Offer
+    </label>
+
+    <label for="menDesignSpecialLine">Special Offer Text</label>
+    <input
+      id="menDesignSpecialLine"
+      type="text"
+      maxlength="160"
+      placeholder="✨ Special Offer — Limited Time"
+    >
+
+
+            <label for="menDesignImage">Upload Design Photo 1 (Required)</label>
+            <input id="menDesignImage" type="file" accept="image/jpeg,image/png,image/webp">
+
+            <label for="menDesignImage2">Upload Design Photo 2 (Optional)</label>
+            <input id="menDesignImage2" type="file" accept="image/jpeg,image/png,image/webp">
+
+            <label for="menDesignImage3">Upload Design Photo 3 (Optional)</label>
+            <input id="menDesignImage3" type="file" accept="image/jpeg,image/png,image/webp">
+
+            <label for="menDesignImage4">Upload Design Photo 4 (Optional)</label>
+            <input id="menDesignImage4" type="file" accept="image/jpeg,image/png,image/webp">
+
+            <label for="menDesignImage5">Upload Design Photo 5 (Optional)</label>
+            <input id="menDesignImage5" type="file" accept="image/jpeg,image/png,image/webp">
+
+            <label for="menDesignVideo">Upload Men's Design Video (Optional)</label>
+            <input id="menDesignVideo" type="file" accept="video/mp4,video/webm,video/quicktime">
+
+
+    <label>
+      <input id="menDesignPublished" type="checkbox" checked>
+      Show this design on the Men's collection page
+    </label>
+
+    <p id="menDesignCurrentImageNote" class="admin-message"></p>
+
+    <button
+      id="saveMenDesignButton"
+      class="button"
+      type="submit"
+    >
+      Save Men's Design
+    </button>
+
+    <button
+      id="cancelMenEditButton"
+      class="button button-light hidden"
+      type="button"
+    >
+      Cancel Edit
+    </button>
+
+    <p
+      id="menDesignStatus"
+      class="admin-message"
+      role="status"
+      aria-live="polite"
+    ></p>
+  </form>
+</section>
+
+
+      <!-- Advertisement Manager -->
+      <section class="admin-panel glass">
+        <h2>Advertisement Manager</h2>
+        <p style="color:#786c8d; margin-bottom:18px;">
+          Upload JPG, PNG, WebP or animated GIF advertisements.
+          Recommended ratio: 3536 × 1070.
+        </p>
+
+        <form id="adForm" class="admin-form">
+          <label for="adTitle">Advertisement Title</label>
+          <input
+            id="adTitle"
+            type="text"
+            maxlength="120"
+            placeholder="e.g. Bridal Embroidery Special"
+            required
+          >
+
+          <label for="adImage">Upload Advertisement Image / GIF</label>
+          <input
+            id="adImage"
+            type="file"
+            accept="image/jpeg,image/png,image/webp,image/gif"
+            required
+          >
+
+          <label for="adTargetUrl">Optional Link</label>
+          <input
+            id="adTargetUrl"
+            type="url"
+            placeholder="https://example.com"
+          >
+
+          <label for="adOrder">Display Order</label>
+          <input
+            id="adOrder"
+            type="number"
+            value="0"
+            min="0"
+            step="1"
+            required
+          >
+
+          <label>
+            <input id="adPublished" type="checkbox" checked>
+            Publish advertisement on homepage
+          </label>
+
+          <button id="saveAdButton" class="button" type="submit">
+            Upload Advertisement
+          </button>
+
+          <p id="adStatus" class="admin-message"
+             role="status" aria-live="polite"></p>
+        </form>
+      </section>
+
+      <!-- Uploaded Advertisements -->
+      <section class="admin-panel glass">
+        <h2>Uploaded Advertisements</h2>
+        <div id="adList" class="admin-designs">
+          <p>Loading advertisements...</p>
+        </div>
+      </section>
+
+      <section class="admin-panel glass">
+        <h2>Uploaded Designs</h2>
+        <div id="designList" class="admin-designs">
+          <p>Loading designs...</p>
+        </div>
+      </section>
+
+      <section class="admin-panel glass">
+        <div class="admin-topbar">
+          <h2>Customer Bookings</h2>
+          <button id="refreshBookings" class="button button-light button-small" type="button">Refresh</button>
+        </div>
+                  <div class="booking-filters">
+        <input
+          id="bookingSearch"
+          type="search"
+          placeholder="Search customer, phone or service..."
+          aria-label="Search customer bookings"
+        >
+
+        <select id="bookingStatusFilter" aria-label="Filter bookings by status">
+          <option value="All">All Statuses</option>
+          <option value="New">New</option>
+          <option value="Contacted">Contacted</option>
+          <option value="Completed">Completed</option>
+          <option value="Cancelled">Cancelled</option>
+        </select>
+      </div>
+        <div id="bookingList" class="admin-bookings">
+          <p>Loading bookings...</p>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>

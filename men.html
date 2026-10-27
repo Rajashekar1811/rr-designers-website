@@ -1,0 +1,306 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Men's Collection | R.R Designers</title>
+  <link rel="icon" href="data:,">
+  <meta name="description" content="Explore beautiful computer embroidery, blouse designs and tailoring services at R.R Designers.">
+  <link rel="stylesheet" href="style.css">
+  
+<style>
+  .men-page {
+    --pink: #1769aa;
+    --purple: #2455a4;
+    --cyan: #27b9dc;
+    --ink: #173451;
+    --muted: #607b96;
+    --glass: rgba(255, 255, 255, 0.72);
+    --border: rgba(255, 255, 255, 0.9);
+    --shadow: 0 18px 55px rgba(30, 90, 150, 0.13);
+
+    background:
+      radial-gradient(ellipse at 8% 10%, #cce8ff, transparent 35%),
+      radial-gradient(ellipse at 92% 18%, #d7e7ff, transparent 35%),
+      linear-gradient(135deg, #f7fbff, #edf5ff 55%, #e9faff);
+    background-attachment: fixed;
+  }
+
+  .men-page .hero {
+    background:
+      radial-gradient(ellipse at 10% 15%, #b9dcffcc, transparent 40%),
+      radial-gradient(ellipse at 90% 20%, #c4d8ffcc, transparent 38%),
+      linear-gradient(135deg, #f7fbff, #edf3ff 55%, #e9faff);
+  }
+
+  .men-page .hero h1 span,
+  .men-page .section-heading h2 span,
+  .men-page .booking-info h2 span {
+    background: linear-gradient(100deg, #1769aa, #2455a4 52%, #1bbfd0);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+  }
+
+  .men-page .button,
+  .men-page .ads-arrow {
+    background: linear-gradient(110deg, #1769aa, #2455a4 65%, #4d9df1);
+    border-color: #1769aa;
+  }
+
+  .men-page .brand-mark {
+    background: linear-gradient(135deg, #1769aa, #2455a4, #27b9dc);
+  }
+
+  .men-page .eyebrow,
+  .men-page .navbar nav a:hover,
+  .men-page .design-modal-category,
+  .men-page .design-modal-price {
+    color: #1769aa;
+  }
+
+  .men-page .gallery-item:hover,
+  .men-page .service-card:hover {
+    border-color: #1769aa;
+  }
+
+  .men-page .ads-slider {
+    background: #e5f2ff;
+  }
+
+  .men-page .ads-dot.active {
+    background: #1769aa;
+  }
+
+  .men-page .design-modal-thumbnails button.active {
+    border-color: #1769aa;
+  }
+  
+</style>
+
+</head>
+<body class="men-page">
+<header class="navbar glass">
+  <a href="#" class="brand">
+    <span class="brand-mark">RR</span>
+    <span>R.R Designers</span>
+  </a>
+
+  <div class="nav-search">
+    <input
+      type="search"
+      id="designSearch"
+      placeholder="🔍 Search designs..."
+      aria-label="Search designs"
+      autocomplete="off"
+    >
+  </div>
+
+  <button
+    class="menu-toggle"
+    id="menuToggle"
+    aria-label="Toggle navigation"
+  >☰</button>
+
+<nav id="navMenu">
+  <a href="#gallery">Our Designs</a>
+  <div class="collection-switch" aria-label="Choose collection">
+    <a href="index.html" class="collection-option">👗Women</a>
+    <a href="men.html" class="collection-option active">👔Men</a>
+  </div>
+</nav>
+
+</header>
+
+
+    <section class="ads-slider" id="adsSlider" aria-label="Advertisements">
+  <div class="ads-track" id="adsTrack">
+    <p class="ads-loading">Discover our latest designs</p>
+  </div>
+
+  <button class="ads-arrow ads-prev" id="adsPrev"
+          type="button" aria-label="Previous advertisement">❮</button>
+
+  <button class="ads-arrow ads-next" id="adsNext"
+          type="button" aria-label="Next advertisement">❯</button>
+
+  <div class="ads-dots" id="adsDots"></div>
+    </section>
+
+  <section class="section gallery-section" id="gallery">
+      <div class="section-heading">
+        <p class="eyebrow">OUR CREATIONS</p>
+        <h2>Design <span>Gallery</span></h2>
+        <p>Explore our latest embroidery and tailoring designs.</p>
+      </div>
+          
+      <div class="gallery-grid" id="publicGallery">
+        <p>Our designs will appear here soon.</p>
+      </div>
+    </section>
+
+    <main>
+
+  </main>
+
+  <footer class="footer">
+    <p>© <span id="year"></span> R.R Designers. All rights reserved.</p>
+    <p>Computer Embroidery • Tailoring • Designer Work</p>
+  </footer>
+
+  <a id="floatingWhatsapp" class="floating-whatsapp"
+     href="#booking" aria-label="WhatsApp enquiry">✆</a>
+  
+<!-- Design Details Popup -->
+<div id="designModal" class="design-modal" aria-hidden="true">
+  <div class="design-modal-backdrop" id="designModalBackdrop"></div>
+
+  <div
+    class="design-modal-card"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="modalDesignTitle"
+  >
+    <button
+      type="button"
+      id="closeDesignModal"
+      class="design-modal-close"
+      aria-label="Close design details"
+    >&#10005;</button>
+
+    <div class="design-modal-gallery">
+      <div class="design-modal-main-image">
+        <img id="modalMainImage" src="" alt="Selected design">
+      </div>
+
+      <div id="modalImageThumbnails" class="design-modal-thumbnails"></div>
+    </div>
+
+    <div class="design-modal-details">
+      <p id="modalDesignCategory" class="design-modal-category"></p>
+
+      <h2 id="modalDesignTitle">Design Name</h2>
+
+      <p id="modalDesignDescription">
+        Design description will appear here.
+      </p>
+
+      <p class="design-modal-price">
+        Price: <span id="modalDesignPrice">Price on request</span>
+      </p>
+
+      <button
+        type="button"
+        id="bookThisDesign"
+        class="button button-full"
+      >Book This Design</button>
+    </div>
+  </div>
+</div>
+        
+<!-- Separate Design Booking Form -->
+<div id="designBookingModal" class="design-modal" aria-hidden="true">
+  <div
+    class="design-modal-backdrop"
+    id="designBookingBackdrop"
+  ></div>
+
+  <div
+    class="design-modal-card design-booking-card"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="designBookingHeading"
+  >
+    <button
+      type="button"
+      id="closeDesignBooking"
+      class="design-modal-close"
+      aria-label="Close booking form"
+    >&#10005;</button>
+
+    <div class="design-modal-gallery">
+      <div class="design-modal-main-image">
+        <img
+          id="bookingDesignImage"
+          src=""
+          alt="Selected design"
+        >
+      </div>
+    </div>
+
+    <div class="design-modal-details">
+      <p class="design-modal-category">YOUR SELECTED DESIGN</p>
+
+      <h2 id="designBookingHeading">Book This Design</h2>
+
+      <h3 id="bookingDesignTitle">Design Name</h3>
+
+      <p class="design-modal-price">
+        Price: <span id="bookingDesignPrice">Price on request</span>
+      </p>
+
+      <form id="designBookingForm" class="booking-form">
+        <label for="designCustomerName">Your Name</label>
+        <input
+          id="designCustomerName"
+          name="customer_name"
+          type="text"
+          placeholder="Enter your name"
+          required
+          maxlength="100"
+        >
+
+        <label for="designCustomerPhone">Phone Number</label>
+        <input
+          id="designCustomerPhone"
+          name="phone"
+          type="tel"
+          placeholder="Enter your phone number"
+          required
+          maxlength="20"
+        >
+
+        <label for="designPreferredDate">Preferred Date</label>
+        <input
+          id="designPreferredDate"
+          name="preferred_date"
+          type="date"
+        >
+
+        <label for="designCustomerMessage">
+          Requirements (Optional)
+        </label>
+        <textarea
+          id="designCustomerMessage"
+          name="message"
+          rows="3"
+          placeholder="Tell us about your requirements"
+          maxlength="1000"
+        ></textarea>
+
+        <button
+          id="submitDesignBooking"
+          class="button button-full"
+          type="submit"
+        >
+          Confirm Design Booking
+        </button>
+
+        <p
+          id="designBookingStatus"
+          role="status"
+          aria-live="polite"
+        ></p>
+      </form>
+    </div>
+  </div>
+</div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script src="men.js"></script>
+</body>
+</escape>
+
+</body>
+</html>

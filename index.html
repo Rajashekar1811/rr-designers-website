@@ -1,0 +1,371 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>R.R Designers | Embroidery & Tailoring</title>
+  <link rel="icon" href="data:,">
+  <meta name="description" content="Explore beautiful computer embroidery, blouse designs and tailoring services at R.R Designers.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  
+<header class="navbar glass">
+  <a href="#" class="brand">
+    <span class="brand-mark">RR</span>
+    <span>R.R Designers</span>
+  </a>
+
+  <div class="nav-search">
+    <input
+      type="search"
+      id="designSearch"
+      placeholder="🔍 Search designs..."
+      aria-label="Search designs"
+      autocomplete="off"
+    >
+  </div>
+
+  <button
+    class="menu-toggle"
+    id="menuToggle"
+    aria-label="Toggle navigation"
+  >☰</button>
+
+<nav id="navMenu">
+  <a href="#home">📍 Location</a>
+  <a href="#gallery">Our Designs</a>
+  <a href="#services">Services</a>
+  <a href="#booking">Booking</a>
+
+  <div class="collection-switch" aria-label="Choose collection">
+    <a href="index.html" class="collection-option active">👗Women</a>
+    <a href="men.html" class="collection-option">👔Men</a>
+  </div>
+</nav>
+
+</header>
+
+
+    <section class="ads-slider" id="adsSlider" aria-label="Advertisements">
+  <div class="ads-track" id="adsTrack">
+    <p class="ads-loading">Discover our latest designs</p>
+  </div>
+
+  <button class="ads-arrow ads-prev" id="adsPrev"
+          type="button" aria-label="Previous advertisement">❮</button>
+
+  <button class="ads-arrow ads-next" id="adsNext"
+          type="button" aria-label="Next advertisement">❯</button>
+
+  <div class="ads-dots" id="adsDots"></div>
+    </section>
+
+  <section class="section gallery-section" id="gallery">
+      <div class="section-heading">
+        <p class="eyebrow">OUR CREATIONS</p>
+        <h2>Design <span>Gallery</span></h2>
+        <p>Explore our latest embroidery and tailoring designs.</p>
+      </div>
+          
+      <div class="gallery-grid" id="publicGallery">
+        <p>Our designs will appear here soon.</p>
+      </div>
+    </section>
+
+    <main>
+    
+<section class="hero" id="home">
+  <div class="hero-content glass">
+    <p class="eyebrow">✦ VISIT US • FIND US • CONNECT ✦</p>
+    <h1>Find <span>R.R Designers</span></h1>
+    <p>
+      Visit our shop for beautiful blouse designs, computer embroidery
+      and tailoring at Ramanthapur, Hyderabad.
+    </p>
+
+    <div class="shop-map">
+      <iframe
+        title="R.R Designers Google Map"
+        src="https://maps.google.com/maps?q=9GPJ%2BPC2%2C%20Ramanthapur%2C%20Venkat%20Reddy%20Nagar%2C%20Amberpet%2C%20Hyderabad%2C%20Telangana%20500013&z=16&output=embed"
+        width="100%"
+        height="350"
+        style="border:0; border-radius:16px;"
+        loading="lazy"
+        allowfullscreen>
+      </iframe>
+    </div>
+
+    <div class="hero-actions">
+      <a
+        class="button"
+        href="https://www.google.com/maps/dir/?api=1&destination=9GPJ%2BPC2%2C%20Ramanthapur%2C%20Venkat%20Reddy%20Nagar%2C%20Amberpet%2C%20Hyderabad%2C%20Telangana%20500013"
+        target="_blank"
+        rel="noopener noreferrer">
+        📍 Get Directions
+      </a>
+
+      <button class="button button-light" type="button"
+        id="heroCustomerLocation">
+        Use My Location
+      </button>
+    </div>
+
+    <p id="heroLocationStatus" role="status">
+      9GPJ+PC2, Ramanthapur, Venkat Reddy Nagar,
+      Amberpet, Hyderabad, Telangana 500013
+    </p>
+  </div>
+</section>
+
+
+    <section class="section" id="services">
+      <div class="section-heading">
+        <p class="eyebrow">WHAT WE CREATE</p>
+        <h2>Our <span>Services</span></h2>
+        <p>Choose a service and book your design with us.</p>
+      </div>
+
+      <div class="service-grid">
+        <article class="service-card glass">
+          <div class="service-icon">🧵</div>
+          <h3>Computer Embroidery</h3>
+          <p>Beautiful embroidery patterns for your special outfits.</p>
+          <button class="button" data-service="Computer Embroidery">Book Service</button>
+        </article>
+
+        <article class="service-card glass">
+          <div class="service-icon">👗</div>
+          <h3>Blouse Stitching</h3>
+          <p>Custom blouse stitching for your preferred design.</p>
+          <button class="button" data-service="Blouse Stitching">Book Service</button>
+        </article>
+
+        <article class="service-card glass">
+          <div class="service-icon">✨</div>
+          <h3>Designer Work</h3>
+          <p>Explore decorative patterns and designer tailoring.</p>
+          <button class="button" data-service="Designer Work">Book Service</button>
+        </article>
+      </div>
+    </section>
+
+    
+
+    <section class="section booking-section" id="booking">
+      <div class="booking-layout">
+        <div class="booking-info">
+          <p class="eyebrow">LET'S CREATE SOMETHING BEAUTIFUL</p>
+          <h2>Book Your <span>Design</span></h2>
+          <p>Share your requirements. Our shop owner can contact you to discuss your design.</p>
+          <div class="contact-card glass">
+            <span>🪡</span>
+            <div>
+              <h3>Made for You</h3>
+              <p>Your design, your choice, your style.</p>
+            </div>
+          </div>
+        </div>
+
+        <form id="bookingForm" class="booking-form glass">
+          <h3>Booking Details</h3>
+
+          <label for="customerName">Your Name</label>
+          <input id="customerName" name="customer_name" type="text"
+                 placeholder="Enter your full name" minlength="2" maxlength="80" required>
+
+          <label for="customerPhone">Phone Number</label>
+          <input id="customerPhone" name="phone" type="tel"
+                 placeholder="Enter your phone number" minlength="7" maxlength="20" required>
+
+          <label for="service">Choose Service</label>
+          <select id="service" name="service" required>
+            <option value="">Select a service</option>
+            <option>Computer Embroidery</option>
+            <option>Blouse Stitching</option>
+            <option>Designer Work</option>
+            <option>Other Tailoring</option>
+          </select>
+
+          <label for="preferredDate">Preferred Date</label>
+          <input id="preferredDate" name="preferred_date" type="date">
+
+          <label for="customerMessage">Design Requirements</label>
+          <textarea id="customerMessage" name="message" rows="4"
+                    minlength="2" maxlength="1000"
+                    placeholder="Describe the design you want..." required></textarea>
+
+          <button class="button button-full" type="submit">Submit Booking</button>
+          <p id="formStatus" role="status" aria-live="polite"></p>
+
+          <a id="whatsappButton" class="button button-light button-full" href="#booking">
+            Enquire on WhatsApp
+          </a>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <p>© <span id="year"></span> R.R Designers. All rights reserved.</p>
+    <p>Computer Embroidery • Tailoring • Designer Work</p>
+  </footer>
+
+  <a id="floatingWhatsapp" class="floating-whatsapp"
+     href="#booking" aria-label="WhatsApp enquiry">✆</a>
+  
+<!-- Design Details Popup -->
+<div id="designModal" class="design-modal" aria-hidden="true">
+  <div class="design-modal-backdrop" id="designModalBackdrop"></div>
+
+  <div
+    class="design-modal-card"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="modalDesignTitle"
+  >
+    <button
+      type="button"
+      id="closeDesignModal"
+      class="design-modal-close"
+      aria-label="Close design details"
+    >&#10005;</button>
+
+    <div class="design-modal-gallery">
+      <div class="design-modal-main-image">
+        <img id="modalMainImage" src="" alt="Selected design">
+      </div>
+
+      <div id="modalImageThumbnails" class="design-modal-thumbnails"></div>
+    </div>
+
+    <div class="design-modal-details">
+      <p id="modalDesignCategory" class="design-modal-category"></p>
+
+      <h2 id="modalDesignTitle">Design Name</h2>
+
+      <p id="modalDesignDescription">
+        Design description will appear here.
+      </p>
+
+      <p class="design-modal-price">
+        Price: <span id="modalDesignPrice">Price on request</span>
+      </p>
+
+      <button
+        type="button"
+        id="bookThisDesign"
+        class="button button-full"
+      >Book This Design</button>
+    </div>
+  </div>
+</div>
+        
+<!-- Separate Design Booking Form -->
+<div id="designBookingModal" class="design-modal" aria-hidden="true">
+  <div
+    class="design-modal-backdrop"
+    id="designBookingBackdrop"
+  ></div>
+
+  <div
+    class="design-modal-card design-booking-card"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="designBookingHeading"
+  >
+    <button
+      type="button"
+      id="closeDesignBooking"
+      class="design-modal-close"
+      aria-label="Close booking form"
+    >&#10005;</button>
+
+    <div class="design-modal-gallery">
+      <div class="design-modal-main-image">
+        <img
+          id="bookingDesignImage"
+          src=""
+          alt="Selected design"
+        >
+      </div>
+    </div>
+
+    <div class="design-modal-details">
+      <p class="design-modal-category">YOUR SELECTED DESIGN</p>
+
+      <h2 id="designBookingHeading">Book This Design</h2>
+
+      <h3 id="bookingDesignTitle">Design Name</h3>
+
+      <p class="design-modal-price">
+        Price: <span id="bookingDesignPrice">Price on request</span>
+      </p>
+
+      <form id="designBookingForm" class="booking-form">
+        <label for="designCustomerName">Your Name</label>
+        <input
+          id="designCustomerName"
+          name="customer_name"
+          type="text"
+          placeholder="Enter your name"
+          required
+          maxlength="100"
+        >
+
+        <label for="designCustomerPhone">Phone Number</label>
+        <input
+          id="designCustomerPhone"
+          name="phone"
+          type="tel"
+          placeholder="Enter your phone number"
+          required
+          maxlength="20"
+        >
+
+        <label for="designPreferredDate">Preferred Date</label>
+        <input
+          id="designPreferredDate"
+          name="preferred_date"
+          type="date"
+        >
+
+        <label for="designCustomerMessage">
+          Requirements (Optional)
+        </label>
+        <textarea
+          id="designCustomerMessage"
+          name="message"
+          rows="3"
+          placeholder="Tell us about your requirements"
+          maxlength="1000"
+        ></textarea>
+
+        <button
+          id="submitDesignBooking"
+          class="button button-full"
+          type="submit"
+        >
+          Confirm Design Booking
+        </button>
+
+        <p
+          id="designBookingStatus"
+          role="status"
+          aria-live="polite"
+        ></p>
+      </form>
+    </div>
+  </div>
+</div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script src="script.js"></script>
+</body>
+</escape>
+
+</body>
+</html>

@@ -1,0 +1,216 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Design Details | R.R Designers</title>
+  <link rel="stylesheet" href="style.css">
+  
+<style>
+  /* Full-screen design details page */
+  .design-page {
+    width: 100%;
+    max-width: none;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    border-radius: 0;
+  }
+
+  /* 7:3 width-to-height slider frame */
+  .design-images {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 7 / 3;
+    min-height: 220px;
+    max-height: 65vh;
+    overflow: hidden;
+    border-radius: 18px;
+    background: linear-gradient(135deg, #fce7f3, #ede9fe, #cffafe);
+    display: block;
+  }
+
+  .design-images img,
+  .design-images video {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 18px;
+    display: block;
+  }
+
+  .design-images img[hidden],
+  .design-images video[hidden] {
+    display: none;
+  }
+
+  .design-slider-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 5;
+    width: 46px;
+    height: 46px;
+    border: 0;
+    border-radius: 50%;
+    background: rgba(255,255,255,.9);
+    color: #8658f5;
+    font-size: 28px;
+    cursor: pointer;
+    box-shadow: 0 4px 18px rgba(52,38,77,.2);
+  }
+
+  .design-slider-arrow.prev { left: 12px; }
+  .design-slider-arrow.next { right: 12px; }
+
+  .design-slider-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  .design-slider-dots button {
+    width: 10px;
+    height: 10px;
+    border: 0;
+    border-radius: 50%;
+    background: #c4b5fd;
+    cursor: pointer;
+  }
+
+  .design-slider-dots button.active {
+    background: #8658f5;
+    transform: scale(1.25);
+  }
+
+  .design-info {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .design-page input,
+  .design-page textarea,
+  .design-page select {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px;
+    margin: 8px 0 16px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font: inherit;
+  }
+
+  .amount-box {
+    padding: 14px;
+    margin: 12px 0;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+  }
+
+  @media (max-width: 700px) {
+    .design-page { padding: 12px; gap: 18px; }
+
+    .design-images {
+      aspect-ratio: 7 / 3;
+      min-height: 180px;
+      max-height: 40vh;
+    }
+
+    .design-slider-arrow {
+      width: 38px;
+      height: 38px;
+      font-size: 23px;
+    }
+  }
+</style>
+
+</head>
+<body>
+  <header class="navbar glass">
+    <a href="index.html" class="brand">
+      <span class="brand-mark">RR</span>
+      <span>R.R Designers</span>
+    </a>
+    <nav><a href="index.html#gallery">Back to Gallery</a></nav>
+  </header>
+
+  <main class="design-page glass">
+    
+    
+<div class="design-gallery-wrap">
+  <div id="designImages" class="design-images">
+    <img id="designImage" src="" alt="Selected design">
+
+    <img id="designImage2" alt="Design photo 2" hidden>
+    <img id="designImage3" alt="Design photo 3" hidden>
+    <img id="designImage4" alt="Design photo 4" hidden>
+    <img id="designImage5" alt="Design photo 5" hidden>
+
+    <video id="designVideo" controls playsinline hidden></video>
+
+    <button type="button" class="design-slider-arrow prev"
+      id="designPrev" aria-label="Previous slide">&#10094;</button>
+
+    <button type="button" class="design-slider-arrow next"
+      id="designNext" aria-label="Next slide">&#10095;</button>
+  </div>
+
+  <div id="designSliderDots" class="design-slider-dots"></div>
+</div>
+
+<div>
+  <p class="eyebrow">YOUR SELECTED DESIGN</p>
+  <h1 id="designTitle">Design Details</h1>
+  <p id="designDescription"></p>
+  <div id="designPriceBox" class="special-price-box">
+    <h3>Design Price: <span id="designPrice">Price on request</span></h3>
+  </div>
+</div>
+
+
+      <form id="pageBookingForm">
+        <h2>Booking Details</h2>
+
+        <label for="customerName">Your Name</label>
+        <input id="customerName" required maxlength="100">
+
+        <label for="customerPhone">Phone Number</label>
+        <input id="customerPhone" type="tel" required maxlength="20">
+
+        <label for="preferredDate">Preferred Date</label>
+        <input id="preferredDate" type="date">
+
+        <label for="requirements">Design Requirements</label>
+        <textarea id="requirements" rows="3" maxlength="1000"></textarea>
+
+ <div class="amount-box">
+    <label for="bargainingAmount">Choose Your Bargaining Amount</label>
+    <select id="bargainingAmount" required>
+        <option value="0">No bargaining</option>
+        <option value="50">₹50</option>
+        <option value="100">₹100</option>
+        <option value="150">₹150</option>
+        <option value="200">₹200</option>
+    </select>
+ </div>
+        <button class="button button-full" type="submit">
+          Submit Design Booking
+        </button>
+        <p id="bookingStatus" role="status"></p>
+      </form>
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script src="design.js"></script>
+</body>
+</html>
