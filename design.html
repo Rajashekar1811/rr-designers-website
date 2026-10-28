@@ -2,46 +2,91 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <link rel="icon" href="data:,">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Design Details | R.R Designers</title>
   <link rel="stylesheet" href="style.css">
-  
 <style>
-  /* Full-screen design details page */
-  .design-page {
-    width: 100%;
-    max-width: none;
-    min-height: 100vh;
-    margin: 0;
-    padding: 20px;
-    box-sizing: border-box;
+  
+  /* Customer rating stars */
+  .star-rating {
     display: flex;
-    flex-direction: column;
-    gap: 24px;
-    border-radius: 0;
+    gap: 8px;
+    align-items: center;
   }
 
-  /* 7:3 width-to-height slider frame */
+  .rating-star {
+    border: none;
+    background: transparent;
+    padding: 0;
+    font-size: 38px;
+    cursor: pointer;
+    color: #cfc8d9;
+    transition: transform 0.2s ease;
+  }
+
+  .rating-star.active {
+    color: #cfc8d9;
+  }
+
+  .rating-star:hover {
+    transform: scale(1.15);
+  }
+
+  .rating-star.active[data-rating="1"] { color: #ff3030; }
+  .rating-star.active[data-rating="2"] { color: #ff8c00; }
+  .rating-star.active[data-rating="3"] { color: #ffd700; }
+  .rating-star.active[data-rating="4"] { color: #90ee90; }
+  .rating-star.active[data-rating="5"] { color: #008000; }
+
+  .design-page {
+    width: 100%;
+    max-width: 1400px;
+    min-height: 100vh;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+    gap: 28px;
+    border-radius: 18px;
+  }
+
+  .design-gallery-wrap {
+  width: 100%;
+  min-width: 0;
+  position: static;
+  top: auto;
+}
+
   .design-images {
     position: relative;
     width: 100%;
-    aspect-ratio: 7 / 3;
-    min-height: 220px;
-    max-height: 65vh;
+    aspect-ratio: 1 / 1;
+    max-height: 78vh;
     overflow: hidden;
-    border-radius: 18px;
-    background: linear-gradient(135deg, #fce7f3, #ede9fe, #cffafe);
-    display: block;
+    border-radius: 14px;
+    background: #fff;
+    border: 1px solid #eee;
+    touch-action: pan-y;
   }
 
   .design-images img,
   .design-images video {
+    display: block;
     width: 100%;
     height: 100%;
     object-fit: contain;
-    border-radius: 18px;
-    display: block;
+    border-radius: 14px;
+    cursor: zoom-in;
+    transition: transform .25s ease;
+  }
+
+  .design-images img.zoomed {
+    transform: scale(1.8);
+    cursor: zoom-out;
   }
 
   .design-images img[hidden],
@@ -54,15 +99,15 @@
     top: 50%;
     transform: translateY(-50%);
     z-index: 5;
-    width: 46px;
-    height: 46px;
-    border: 0;
+    width: 44px;
+    height: 44px;
+    border: 1px solid #eee;
     border-radius: 50%;
-    background: rgba(255,255,255,.9);
+    background: rgba(255,255,255,.95);
     color: #8658f5;
-    font-size: 28px;
+    font-size: 25px;
     cursor: pointer;
-    box-shadow: 0 4px 18px rgba(52,38,77,.2);
+    box-shadow: 0 3px 12px rgba(0,0,0,.12);
   }
 
   .design-slider-arrow.prev { left: 12px; }
@@ -71,28 +116,45 @@
   .design-slider-dots {
     display: flex;
     justify-content: center;
-    gap: 8px;
-    margin-top: 12px;
+    gap: 10px;
+    margin: 14px 0;
+    flex-wrap: wrap;
   }
 
   .design-slider-dots button {
-    width: 10px;
-    height: 10px;
-    border: 0;
-    border-radius: 50%;
-    background: #c4b5fd;
+    width: 48px;
+    height: 48px;
+    padding: 2px;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    background: #fff;
+    overflow: hidden;
     cursor: pointer;
   }
 
   .design-slider-dots button.active {
-    background: #8658f5;
-    transform: scale(1.25);
+    border-color: #8658f5;
+  }
+
+  .design-slider-dots img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: 5px;
   }
 
   .design-info {
-    width: 100%;
-    max-width: 1100px;
-    margin: 0 auto;
+    min-width: 0;
+  }
+
+  #designTitle {
+    overflow-wrap: anywhere;
+  }
+
+  #pageBookingForm {
+    grid-column: 2;
+    min-width: 0;
   }
 
   .design-page input,
@@ -115,23 +177,186 @@
     border-radius: 12px;
   }
 
-  @media (max-width: 700px) {
-    .design-page { padding: 12px; gap: 18px; }
+  @media (max-width: 760px) {
+    .design-page {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      width: 100%;
+      padding: 0;
+      border-radius: 0;
+    }
+
+    .design-gallery-wrap {
+      position: relative;
+      top: auto;
+      width: 100%;
+      margin: 0;
+    }
 
     .design-images {
-      aspect-ratio: 7 / 3;
-      min-height: 180px;
-      max-height: 40vh;
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      max-height: none;
+      border-radius: 0;
+      border-left: 0;
+      border-right: 0;
+    }
+
+    .design-images img,
+    .design-images video {
+      border-radius: 0;
     }
 
     .design-slider-arrow {
       width: 38px;
       height: 38px;
-      font-size: 23px;
+      font-size: 22px;
+    }
+
+    .design-slider-dots {
+      padding: 0 10px;
+      margin: 12px 0;
+    }
+
+    .design-slider-dots button {
+      width: 44px;
+      height: 44px;
+    }
+
+    .design-page > div:not(.design-gallery-wrap),
+    #pageBookingForm {
+      width: 100%;
+      padding: 16px;
+      box-sizing: border-box;
+    }
+
+    #pageBookingForm {
+      margin: 0;
     }
   }
-</style>
+  
+  /* Customer Reviews layout and spacing */
+#customerReviews {
+  grid-column: 1 / -1;
+  width: 100%;
+  margin: 32px 0 24px;
+  padding: 24px;
+  box-sizing: border-box;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 8px 24px rgba(134, 88, 245, 0.08);
+}
 
+#customerReviews h2 {
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+#reviewForm > button[type="submit"],
+#reviewForm > button[onclick] {
+  margin-top: 12px;
+  margin-right: 10px;
+}
+
+#reviewStatus {
+  margin-top: 16px;
+}
+
+#reviewList {
+  margin-top: 24px;
+}
+
+@media (max-width: 760px) {
+  #customerReviews {
+    width: 100%;
+    margin: 24px 0 16px;
+    padding: 18px;
+    border-radius: 0;
+  }
+
+  #reviewForm > button {
+    margin-bottom: 10px;
+  }
+}
+    
+#pageBookingForm[hidden] {
+  display: none !important;
+}
+
+#pageBookingForm:not([hidden]) {
+  display: block !important;
+  grid-column: 1;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 16px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.8);
+}
+/* Customer review image and text side by side */
+.review-body {
+  width: 100%;
+  min-width: 0;
+}
+
+.review-body.has-review-images {
+  display: grid;
+  grid-template-columns: minmax(110px, 180px) minmax(0, 1fr);
+  gap: 18px;
+}
+
+.review-body.has-review-images .review-content {
+  position: relative;
+  top: -15px;
+}
+
+.review-content-images {
+  width: 100%;
+}
+
+.customer-review-image {
+  display: block;
+  width: 100%;
+  max-width: 180px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.review-content {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.review-content > p:first-child {
+  margin-top: 0;
+}
+
+.review-thank-you {
+  margin-top: 12px;
+  padding: 12px;
+  border-radius: 12px;
+  background: rgba(255, 79, 163, 0.09);
+  border-left: 3px solid #ff4fa3;
+  line-height: 1.6;
+}
+
+/* Mobile layout */
+@media (max-width: 520px) {
+  .review-body.has-review-images {
+    grid-template-columns: 100px minmax(0, 1fr);
+    gap: 12px;
+  }
+
+  .customer-review-image {
+    height: 110px;
+  }
+}
+#reviewList .review-body.has-review-images > .review-content {
+  transform: translateY(-40px) !important;
+}
+</style>
 </head>
 <body>
   <header class="navbar glass">
@@ -143,7 +368,6 @@
   </header>
 
   <main class="design-page glass">
-    
     
 <div class="design-gallery-wrap">
   <div id="designImages" class="design-images">
@@ -166,17 +390,70 @@
   <div id="designSliderDots" class="design-slider-dots"></div>
 </div>
 
-<div>
-  <p class="eyebrow">YOUR SELECTED DESIGN</p>
-  <h1 id="designTitle">Design Details</h1>
-  <p id="designDescription"></p>
-  <div id="designPriceBox" class="special-price-box">
-    <h3>Design Price: <span id="designPrice">Price on request</span></h3>
-  </div>
-</div>
+    <div class="design-info">
+      <p class="eyebrow">YOUR SELECTED DESIGN</p>
+      <h1 id="designTitle">Design Details</h1>
+      <p id="designDescription"></p>
+      <div id="designPriceBox" class="special-price-box">
+        <h3>Design Price: <span id="designPrice">Price on request</span></h3>
+      </div>
+    </div>
+      
+    <section id="customerReviews" class="customer-reviews">
+      <h2>Customer Reviews</h2>
+      <form id="reviewForm">  
+        <label for="reviewCustomerName">Your Name</label>
+      <input
+        type="text"
+        id="reviewCustomerName"
+        maxlength="100"
+        required
+        placeholder="Enter your name"/>
+      <label>Your Rating</label>
+      <div id="starRating" class="star-rating" role="group" aria-label="Choose your rating">
+        <button type="button" class="rating-star" data-rating="1" aria-label="1 star">★</button>
+        <button type="button" class="rating-star" data-rating="2" aria-label="2 stars">★</button>
+        <button type="button" class="rating-star" data-rating="3" aria-label="3 stars">★</button>
+        <button type="button" class="rating-star" data-rating="4" aria-label="4 stars">★</button>
+        <button type="button" class="rating-star" data-rating="5" aria-label="5 stars">★</button>
+      </div>
+      <input type="hidden" id="reviewRating" value="" required>
+      <p id="ratingStatus" role="status">Select your rating</p>
 
 
-      <form id="pageBookingForm">
+    <label for="reviewMessage">Your Review</label>
+    <textarea id="reviewMessage" rows="3"
+      maxlength="1000" required
+      placeholder="Write your experience..."></textarea>
+
+    <label for="reviewImages">Upload Photos (Maximum 2)</label>
+    <input id="reviewImages" type="file"
+      accept="image/jpeg,image/png,image/webp" multiple>
+
+    <div id="reviewImagePreview" class="review-image-preview"></div>
+    <p id="reviewImageStatus" role="status"></p>
+
+    
+<button class="button" type="submit">Submit Review</button>
+
+
+<button
+  class="button"
+  type="button"
+  onclick="window.location.href='booking.html'">
+  Booking Form
+</button>
+
+
+
+    <p id="reviewStatus" role="status"></p>
+  </form>
+
+  <div id="reviewList"></div>
+</section>
+
+
+      <form id="pageBookingForm" hidden>
         <h2>Booking Details</h2>
 
         <label for="customerName">Your Name</label>
@@ -206,11 +483,25 @@
         </button>
         <p id="bookingStatus" role="status"></p>
       </form>
-    </div>
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase-config.js"></script>
   <script src="design.js"></script>
+    
+<script>
+  function openBookingForm() {
+    const bookingForm = document.getElementById("pageBookingForm");
+
+    if (!bookingForm) {
+      alert("Booking Details form not found.");
+      return;
+    }
+
+    bookingForm.removeAttribute("hidden");
+    bookingForm.style.display = "block";
+    bookingForm.style.visibility = "visible";
+  }
+</script> 
 </body>
 </html>

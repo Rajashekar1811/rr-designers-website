@@ -1,0 +1,63 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Booking Details | R.R Designers</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="data:,">
+</head>
+<body>
+
+  <header class="navbar glass">
+    <a href="index.html" class="brand">
+      <span class="brand-mark">RR</span>
+      <span>R.R Designers</span>
+    </a>
+    <nav><a href="javascript:history.back()">Back to Design</a></nav>
+  </header>
+
+  <main class="glass" style="max-width:650px;margin:30px auto;padding:24px;border-radius:18px;">
+    <h1>Booking Details</h1>
+    <p>Enter your details to book this design.</p>
+
+    <form id="bookingForm">
+      <label for="customerName">Your Name</label>
+      <input id="customerName" name="customerName" required maxlength="100"
+        style="display:block;width:100%;padding:12px;margin:8px 0 16px;box-sizing:border-box;">
+
+      <label for="customerPhone">Phone Number</label>
+      <input id="customerPhone" name="customerPhone" type="tel" required maxlength="20"
+        style="display:block;width:100%;padding:12px;margin:8px 0 16px;box-sizing:border-box;">
+
+      <label for="preferredDate">Preferred Date</label>
+      <input id="preferredDate" name="preferredDate" type="date"
+        style="display:block;width:100%;padding:12px;margin:8px 0 16px;box-sizing:border-box;">
+
+      <label for="requirements">Design Requirements</label>
+      <textarea id="requirements" name="requirements" rows="3" maxlength="1000"
+        style="display:block;width:100%;padding:12px;margin:8px 0 16px;box-sizing:border-box;"></textarea>
+
+      <label for="bargainingAmount">Choose Your Bargaining Amount</label>
+      <select id="bargainingAmount" name="bargainingAmount" required
+        style="display:block;width:100%;padding:12px;margin:8px 0 16px;box-sizing:border-box;">
+        <option value="0">No bargaining</option>
+        <option value="50">₹50</option>
+        <option value="100">₹100</option>
+        <option value="150">₹150</option>
+        <option value="200">₹200</option>
+      </select>
+
+      <button class="button button-full" type="submit">
+        Submit Design Booking
+      </button>
+      <p id="bookingStatus" role="status"></p>
+    </form>
+  </main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script src="booking.js"></script>
+</body>
+</html>

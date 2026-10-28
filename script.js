@@ -831,3 +831,73 @@ document.getElementById("heroCustomerLocation")?.addEventListener("click", () =>
     }
   );
 });
+
+/* Customer review submission */
+const reviewForm = document.getElementById("reviewForm");
+
+reviewForm?.addEventListener("submit", async (event) => {
+  event.preventDefault();
+
+  const status = document.getElementById("reviewStatus");
+  const submitButton = reviewForm.querySelector(
+    'button[type="submit"]'
+  );
+
+  const customerName =
+    document.getElementById("reviewCustomerName")?.value.trim() ||
+    document.getElementById("designCustomerName")?.value.trim() ||
+    document.getElementById("customerName")?.value.trim();
+
+  const rating = Number(
+    document.getElementById("reviewRating")?.value
+  );
+
+  const review = document
+    .getElementById("reviewMessage")
+    ?.value.trim();
+
+  if (!customerName) {
+    if (status) status.textContent = "Please enter your name.";
+    return;
+  }
+
+  if (!Number.isInteger(rating) || rating < 1 || rating > 5) {
+    if (status) status.textContent = "Please select a rating from 1 to 5.";
+    return;
+  }
+
+  if (!review) {
+    if (status) status.textContent = "Please write your review.";
+    return;
+  }
+
+  if (submitButton) submitButton.disabled = true;
+  if (status) status.textContent = "Submitting your review...";
+
+  try {
+    const { error } = await db.from("rr_feedback").insert({
+      customer_name: customerName,
+      rating: rating,
+      review: review,
+      status: "Pending"
+    });
+
+    if (error) throw error;
+
+    if (status) {
+      status.textContent =
+        "Thank you! Your review was submitted for approval.";
+    }
+
+    reviewForm.reset();
+  } catch (error) {
+    console.error("Review submission error:", error);
+
+    if (status) {
+      status.textContent =
+        "Review could not be submitted: " + error.message;
+    }
+  } finally {
+    if (submitButton) submitButton.disabled = false;
+  }
+});

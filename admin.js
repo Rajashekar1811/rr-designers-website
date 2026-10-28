@@ -587,19 +587,19 @@ if (priceText === "" && discountValue > 0) {
 
   try {
 const imageUrls = [
-  editingMenDesign?.image_url || "",
-  editingMenDesign?.image_url_2 || "",
-  editingMenDesign?.image_url_3 || "",
-  editingMenDesign?.image_url_4 || "",
-  editingMenDesign?.image_url_5 || ""
+  editingDesign?.image_url || "",
+  editingDesign?.image_url_2 || "",
+  editingDesign?.image_url_3 || "",
+  editingDesign?.image_url_4 || "",
+  editingDesign?.image_url_5 || ""
 ];
 
 const storagePaths = [
-  editingMenDesign?.storage_path || "",
-  editingMenDesign?.storage_path_2 || "",
-  editingMenDesign?.storage_path_3 || "",
-  editingMenDesign?.storage_path_4 || "",
-  editingMenDesign?.storage_path_5 || ""
+  editingDesign?.storage_path || "",
+  editingDesign?.storage_path_2 || "",
+  editingDesign?.storage_path_3 || "",
+  editingDesign?.storage_path_4 || "",
+  editingDesign?.storage_path_5 || ""
 ];
 
 let videoUrl = editingDesign?.video_url || null;
@@ -1099,6 +1099,7 @@ async function startAdmin() {
     await loadDesigns();
     await loadBookings();
     await loadAds();
+    await loadFeedback();
   }
 }
 
@@ -1675,3 +1676,293 @@ if (editingMenDesign) {
 });
 
 $("cancelMenEditButton").addEventListener("click", resetMenDesignForm);
+
+/* Customer Feedback Manager */
+
+let allFeedback = [];
+
+async function loadFeedback() {
+  if (!(await verifyOwner())) return;
+
+  const list = $("feedbackList");
+  if (!list) return;
+
+  list.replaceChildren(
+    createElement("tr")
+  );
+
+  const loadingRow = list.firstElementChild;
+  const loadingCell = createElement(
+    "td",
+    "",
+    "Loading customer feedback..."
+  );
+  loadingCell.colSpan = 7;
+  loadingRow.appendChild(loadingCell);
+
+  const { data, error } = await db
+    .from("rr_feedback")
+    .select("*")
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    list.replaceChildren();
+    const row = createElement("tr");
+    const cell = createElement(
+      "td",
+      "",
+      "Could not load feedback: " + error.message
+    );
+    cell.colSpan = 7;
+    row.appendChild(cell);
+    list.appendChild(row);
+    console.error("Feedback loading error:", error);
+    return;
+  }
+
+  allFeedback = data || [];
+  filterFeedback();
+}
+
+function filterFeedback() {
+  const search = $("feedbackSearch");
+  const statusFilter = $("feedbackStatusFilter");
+
+  const searchText = search
+    ? search.value.trim().toLowerCase()
+    : "";
+
+  const selectedStatus = statusFilter
+    ? statusFilter.value
+    : "All";
+
+  const filtered = allFeedback.filter((item) => {
+    const matchesSearch = [
+      item.customer_name,
+      item.review
+    ].some((value) =>
+      String(value || "").toLowerCase().includes(searchText)
+    );
+
+    const matchesStatus =
+      selectedStatus === "All" ||
+      item.status === selectedStatus;
+
+    return matchesSearch && matchesStatus;
+  });
+
+  renderFeedback(filtered);
+}
+
+function renderFeedback(feedback) {
+  const list = $("feedbackList");
+  if (!list) return;
+
+  list.replaceChildren();
+
+  if (feedback.length === 0) {
+    const row = createElement("tr");
+    const cell = createElement(
+      "td",
+      "",
+      "No feedback found."
+    );
+    cell.colSpan = 7;
+    row.appendChild(cell);
+    list.appendChild(row);
+    return;
+  }
+
+  feedback.forEach((item) => {
+    const row = document.createElement("tr");
+
+    function addCell(value) {
+      const cell = createElement("td", "", value || "—");
+      row.appendChild(cell);
+      return cell;
+    }
+
+    addCell(item.customer_name);
+    addCell("★".repeat(Number(item.rating) || 0));
+
+    addCell(item.review);
+
+    const imageCell = document.createElement("td");
+
+    if (item.image_url) {
+      const image = createElement("img");
+      image.src = item.image_url;
+      image.alt = "Customer review";
+      image.loading = "lazy";
+      image.className = "customer-review-image";
+      imageCell.appendChild(image);
+    } else {
+      imageCell.textContent = "No image";
+    }
+
+    row.appendChild(imageCell);
+
+    addCell(
+      item.created_at
+        ? new Date(item.created_at).toLocaleString()
+        : "—"
+    );
+
+    addCell(item.status || "Pending");
+
+    const actionsCell = createElement("td", "booking-actions");
+
+    if (item.status !== "Approved") {
+      actionsCell.appendChild(
+        makeButton(
+          "Approve",
+          "button button-small",
+          () => updateFeedbackStatus(item, "Approved")
+        )
+      );
+    }
+
+    if (item.status !== "Rejected") {
+      actionsCell.appendChild(
+        makeButton(
+          "Reject",
+          "button button-small danger-button",
+          () => updateFeedbackStatus(item, "Rejected")
+        )
+      );
+    }
+
+    if (item.status !== "Pending") {
+      actionsCell.appendChild(
+        makeButton(
+          "Set Pending",
+          "button button-small button-light",
+          () => updateFeedbackStatus(item, "Pending")
+        )
+      );
+    }
+        actionsCell.appendChild(
+          makeButton(
+            "Delete",
+            "button button-small danger-button",
+        () => deleteFeedback(item)
+      )
+    );
+    row.appendChild(actionsCell);
+    list.appendChild(row);
+  });
+}
+
+async function updateFeedbackStatus(item, status) {
+  if (!(await verifyOwner())) return;
+
+  const message = $("feedbackStatusMessage");
+
+  if (message) {
+    message.textContent = "Updating feedback...";
+  }
+
+
+  const updates = { status };
+
+  if (status === "Approved") {
+    updates.admin_reply = generateReviewReply(
+      item.rating,
+      item.review
+    );
+  }
+
+  const { error } = await db
+    .from("rr_feedback")
+    .update(updates)
+    .eq("id", item.id);
+
+
+  if (error) {
+    if (message) {
+      message.textContent =
+        "Could not update feedback: " + error.message;
+    }
+    console.error("Feedback update error:", error);
+    return;
+  }
+
+  if (message) {
+    message.textContent =
+      `Feedback marked ${status.toLowerCase()}.`;
+  }
+
+  await loadFeedback();
+}
+      async function deleteFeedback(item) {
+  if (!(await verifyOwner())) return;
+
+  const confirmed = window.confirm(
+    `Permanently delete the review from "${item.customer_name}"?`
+  );
+
+  if (!confirmed) return;
+
+  const message = $("feedbackStatusMessage");
+
+  if (message) {
+    message.textContent = "Deleting review...";
+  }
+
+  const { error } = await db
+    .from("rr_feedback")
+    .delete()
+    .eq("id", item.id);
+
+  if (error) {
+    if (message) {
+      message.textContent =
+        "Could not delete review: " + error.message;
+    }
+
+    console.error("Feedback delete error:", error);
+    return;
+  }
+
+  if (message) {
+    message.textContent = "Review deleted successfully.";
+  }
+
+  await loadFeedback();
+}
+if ($("refreshFeedback")) {
+  $("refreshFeedback").addEventListener("click", loadFeedback);
+}
+
+if ($("feedbackSearch")) {
+  $("feedbackSearch").addEventListener("input", filterFeedback);
+}
+
+if ($("feedbackStatusFilter")) {
+  $("feedbackStatusFilter").addEventListener(
+    "change",
+    filterFeedback
+  );
+}
+
+function generateReviewReply(rating, review) {
+  const text = String(review || "").toLowerCase();
+
+  const mentionsIssue =
+    /late|delay|slow|poor|bad|issue|problem|not good|disappoint|unsatisfied|damage|wrong|rude|improve/.test(text);
+
+  if (Number(rating) <= 2 || mentionsIssue) {
+    return "Thank you for sharing your feedback. We're sorry your experience did not meet your expectations. We appreciate your suggestions and will work to improve our service.";
+  }
+
+  if (Number(rating) === 3) {
+    return "Thank you for your honest feedback. We appreciate your suggestions and will keep working to improve our service.";
+  }
+
+  if (Number(rating) === 4) {
+    return "Thank you for your kind feedback! We're glad you had a good experience with R.R. Designers.";
+  }
+
+  return "Thank you so much for your wonderful feedback! We're delighted you enjoyed your experience with R.R. Designers. We look forward to serving you again.";
+}
+

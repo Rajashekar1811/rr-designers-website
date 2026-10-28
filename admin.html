@@ -487,6 +487,72 @@
           <p>Loading bookings...</p>
         </div>
       </section>
+            
+<!-- Customer Feedback Manager -->
+<section class="admin-panel glass">
+  <div class="admin-topbar">
+    <h2>Customer Feedback</h2>
+    <button
+      id="refreshFeedback"
+      class="button button-light button-small"
+      type="button"
+    >
+      Refresh Feedback
+    </button>
+  </div>
+
+  <p style="color:#786c8d; margin-bottom:16px;">
+    Review customer feedback before publishing it on the website.
+  </p>
+
+  <div class="booking-filters">
+    <input
+      id="feedbackSearch"
+      type="search"
+      placeholder="Search customer or feedback..."
+      aria-label="Search customer feedback"
+    >
+
+    <select
+      id="feedbackStatusFilter"
+      aria-label="Filter feedback by status"
+    >
+      <option value="All">All Feedback</option>
+      <option value="Pending">Pending</option>
+      <option value="Approved">Approved</option>
+      <option value="Rejected">Rejected</option>
+    </select>
+  </div>
+
+  <div class="booking-table-wrapper">
+    <table class="booking-table">
+      <thead>
+        <tr>
+          <th>Customer</th>
+          <th>Rating</th>
+          <th>Review</th>
+          <th>Image</th>
+          <th>Date</th>
+          <th>Status</th>
+          <th>Owner Actions</th>
+        </tr>
+      </thead>
+      <tbody id="feedbackList">
+        <tr>
+          <td colspan="7">Loading customer feedback...</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p
+    id="feedbackStatusMessage"
+    class="admin-message"
+    role="status"
+    aria-live="polite"
+  ></p>
+</section>
+
     </div>
   </main>
 
